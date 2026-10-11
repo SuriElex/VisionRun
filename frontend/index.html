@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>VisionRun | Body Controlled Runner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="VisionRun home">
+        <span class="brand-mark">VR</span>
+        <span>Vision<span class="accent">Run</span>
+          <small>MOVE IN REAL LIFE</small>
+        </span>
+      </a>
+      <div class="stage-pill">
+        <span class="pulse"></span> STAGE 02 · RUNNER GAME
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">YOUR BODY IS THE CONTROLLER</div>
+        <h1>Move in real life.<br>
+          <span class="gradient-text">Play in virtual world.</span>
+        </h1>
+        <p>Control your runner using real body movements through your webcam.</p>
+      </section>
+
+      <section class="workspace">
+        <article class="camera-card panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">LIVE INPUT</span>
+              <h2>Camera & pose detection</h2>
+            </div>
+            <span id="cameraBadge" class="status-badge idle">
+              <span></span> Not started
+            </span>
+          </div>
+
+          <div class="video-stage" id="videoStage">
+            <video id="webcam" autoplay playsinline muted></video>
+            <canvas id="poseCanvas"></canvas>
+
+            <div id="cameraPlaceholder" class="camera-placeholder">
+              <div class="camera-icon">⌁</div>
+              <strong>Your camera preview will appear here</strong>
+              <span>Keep your head, hips and knees visible.</span>
+            </div>
+
+            <div class="video-overlay top-left">
+              <span class="rec-dot"></span> LIVE PREVIEW
+            </div>
+            <div class="video-overlay top-right">ON-DEVICE AI</div>
+            <div id="poseTag" class="pose-tag">Waiting for body…</div>
+          </div>
+
+          <div class="camera-actions">
+            <button id="startBtn" class="button primary">▶ Start camera</button>
+            <button id="stopBtn" class="button secondary" disabled>Stop camera</button>
+          </div>
+
+          <p class="privacy-note">
+            ◈ Video processing happens in your browser.
+          </p>
+          <p id="errorBox" class="error-box" role="alert" hidden></p>
+        </article>
+
+        <aside class="side-column">
+          <article class="panel status-panel">
+            <span class="section-kicker">SYSTEM STATUS</span>
+            <h2>Detection health</h2>
+
+            <div class="metric-row">
+              <span>Camera</span><strong id="cameraMetric" class="muted">Off</strong>
+            </div>
+            <div class="metric-row">
+              <span>Pose model</span><strong id="modelMetric" class="muted">Not loaded</strong>
+            </div>
+            <div class="metric-row">
+              <span>Body detected</span><strong id="bodyMetric" class="muted">—</strong>
+            </div>
+            <div class="metric-row">
+              <span>Processing rate</span><strong id="fpsMetric" class="muted">— FPS</strong>
+            </div>
+          </article>
+
+          <article class="panel action-panel">
+            <span class="section-kicker">MOVEMENT PREVIEW</span>
+            <h2>Controller output</h2>
+
+            <div id="actionDisplay" class="action-display">
+              <span class="action-symbol">◎</span>
+              <div>
+                <strong id="actionName">WAITING</strong>
+                <small id="actionHint">Start the camera and stand in view.</small>
+              </div>
+            </div>
+
+            <div class="action-legend">
+              <div><span class="key-chip">↑</span><span>Jump <small>Lower then rise</small></span></div>
+              <div><span class="key-chip">←</span><span>Move left <small>Lean left</small></span></div>
+              <div><span class="key-chip">→</span><span>Move right <small>Lean right</small></span></div>
+            </div>
+          </article>
+        </aside>
+      </section>
+
+      <!-- NEW RUNNER GAME -->
+      <section class="panel runner-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="section-kicker">STAGE 02 · GAMEPLAY</span>
+            <h2>VisionRun Runner</h2>
+          </div>
+          <div class="runner-score">
+            SCORE <strong id="gameScore">0</strong>
+          </div>
+        </div>
+
+        <div class="runner-stage">
+          <canvas id="gameCanvas" width="800" height="440"
+                  aria-label="Three lane running game"></canvas>
+
+          <div id="gameOverlay" class="game-overlay">
+            <h2 id="gameMessage">READY TO RUN?</h2>
+            <p id="gameInstructions">
+              Start the game, then use your body to control the runner.
+            </p>
+            <button id="gameStartBtn" class="button primary">Start Game</button>
+          </div>
+        </div>
+
+        <div class="runner-controls">
+          <button id="leftBtn" class="button secondary">← Left</button>
+          <button id="jumpBtn" class="button secondary">↑ Jump</button>
+          <button id="rightBtn" class="button secondary">Right →</button>
+        </div>
+
+        <p class="fine-print">
+          Start the camera and game together for body control.
+          Keyboard controls: A / D or arrow keys to move; Space to jump.
+          Avoid the obstacles to increase your score.
+        </p>
+      </section>
+
+      <section class="checklist panel">
+        <span class="section-kicker">DEVELOPMENT CHECKLIST</span>
+        <h2>What we need to confirm</h2>
+        <div class="check-items">
+          <span id="checkCamera" class="check-item"><b>1</b> Camera opens</span>
+          <span id="checkPose" class="check-item"><b>2</b> Body landmarks appear</span>
+          <span id="checkMove" class="check-item"><b>3</b> Movement label changes</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>VISIONRUN · DEVELOPMENT BUILD</span>
+      <span>STAGE 02 OF 05</span>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
